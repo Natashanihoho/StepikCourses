@@ -71,7 +71,7 @@ public class PointsEntry {
     }
     public static void pointsSearching () {
         int startIndex = 0;
-        int endIndex = startPoints.length - 1;
+        int endIndex = sortedPoints.length - 1;
 
         int[] counts1 = new int[sortedPoints.length];
         int[] counts2 = new int[sortedPoints.length];
@@ -81,13 +81,13 @@ public class PointsEntry {
             else startIndex = searchBeginPoints(startPoints, sortedPoints[i], startIndex);
             counts1[i] = startIndex;
         }
-        System.out.println(Arrays.toString(counts1));
+        //System.out.println(Arrays.toString(counts1));
         for (int j = sortedPoints.length - 1; j >= 0 ; j--) {
             if(endIndex < 0) endIndex = 0;
             else endIndex = searchEndPoints(endPoints, sortedPoints[j], endIndex);
             counts2[j] = endIndex;
         }
-        System.out.println(Arrays.toString(counts2));
+        //System.out.println(Arrays.toString(counts2));
         for (int i = 0; i < counts1.length; i++) {
             counterMap.put(sortedPoints[i], counts1[i] - counts2[i]);
         }
@@ -137,10 +137,16 @@ public class PointsEntry {
 
             if(number == array[middle]) {
                 if( middle != 0) {
-                    middle--;
+
                     while(number == array[middle]) {
+                        middle--;
+                        if(number != array[middle]) {
+                            middle++;
+                            break;
+                        }
                         if (middle == 0)
                             break;
+
                     }
                 }
 
