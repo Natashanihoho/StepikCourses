@@ -48,6 +48,7 @@ public class Inversions {
         mergeSort(right, n-middle);
 
         merge(a, left, right, middle, n - middle);
+
     }
 
     static void merge(int[] a, int[] left, int[] right, int l, int r) {
