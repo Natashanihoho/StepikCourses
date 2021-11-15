@@ -71,7 +71,7 @@ public class PointsEntry {
     }
     public static void pointsSearching () {
         int startIndex = 0;
-        int endIndex = sortedPoints.length - 1;
+        int endIndex = 0;
 
         int[] counts1 = new int[sortedPoints.length];
         int[] counts2 = new int[sortedPoints.length];
@@ -81,12 +81,18 @@ public class PointsEntry {
             else startIndex = searchBeginPoints(startPoints, sortedPoints[i], startIndex);
             counts1[i] = startIndex;
         }
-        //System.out.println(Arrays.toString(counts1));
-        for (int j = sortedPoints.length - 1; j >= 0 ; j--) {
-            if(endIndex < 0) endIndex = 0;
+        System.out.println(Arrays.toString(counts1));
+        for (int j = 0; j < sortedPoints.length; j++) {
+            if(endIndex > startPoints.length - 1) endIndex = startPoints.length;
             else endIndex = searchEndPoints(endPoints, sortedPoints[j], endIndex);
             counts2[j] = endIndex;
         }
+        System.out.println(Arrays.toString(counts2));
+//        for (int j = sortedPoints.length - 1; j >= 0 ; j--) {
+//            if(endIndex < 0) endIndex = 0;
+//            else endIndex = searchEndPoints(endPoints, sortedPoints[j], endIndex);
+//            counts2[j] = endIndex;
+//        }
         //System.out.println(Arrays.toString(counts2));
         for (int i = 0; i < counts1.length; i++) {
             counterMap.put(sortedPoints[i], counts1[i] - counts2[i]);
@@ -109,15 +115,15 @@ public class PointsEntry {
 
             if(number == array[middle]) {
                 middle++;
-                while(number == array[middle]) {
-                    middle++;
-                    if(middle == array.length)
-                    break;
-                }
+                while(middle <= array.length - 1) {
+                   if(number != array[middle])
+                       break;
+                   else middle++;
 
+                }
                 break;
             }
-            if(number < array[middle]) right = middle - 1;
+            else if(number < array[middle]) right = middle - 1;
             else if(number > array[middle]) {
                 left = middle + 1;
                 middle++;
@@ -127,8 +133,8 @@ public class PointsEntry {
     }
 
     public static int searchEndPoints(int[] array, int number, int end) {
-        int left = 0;
-        int right = end;
+        int left = end;
+        int right = array.length - 1;
         int middle = 0;
 
         while (left <= right) {
@@ -136,23 +142,18 @@ public class PointsEntry {
             middle = (left + right) / 2;
 
             if(number == array[middle]) {
-                if( middle != 0) {
-
-                    while(number == array[middle]) {
-                        middle--;
-                        if(number != array[middle]) {
-                            middle++;
-                            break;
-                        }
-                        if (middle == 0)
-                            break;
-
+                while(middle != 0) {
+                    middle--;
+                    if(number != array[middle]) {
+                        middle++;
+                        break;
                     }
+
                 }
 
                 break;
             }
-            if(number < array[middle]) right = middle - 1;
+            else if(number < array[middle]) right = middle - 1;
             else if(number > array[middle]) {
                 left = middle + 1;
                 middle++;
